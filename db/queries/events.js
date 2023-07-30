@@ -1,0 +1,104 @@
+const pool = require('../index');
+
+
+// Create an Event:
+const addEvent = function (newEvent) {
+  const { eventName, eventDescription, eventLocation, eventDate } = newEvent;
+  return pool
+    .query(
+      "INSERT INTO events (eventName, eventDescription, eventLocation, eventDate) VALUES($1, $2, $3, $4) RETURNING *",
+      [eventName, eventDescription, eventLocation, eventDate]
+    )
+    .then((res) => {
+      console.log(res.rows);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+
+};
+
+/*
+// Testing newEvent added
+const newEvent = {
+  eventName: 'Coffee Chat',
+  eventDescription: 'Networking event to meet people in the Tech industry',
+  eventLocation: 'Saskatoon',
+  eventDate: '2023-11-10',
+};
+
+addEvent(newEvent);
+*/
+
+// Get All Events:
+const getAllEvents = function () {
+  return pool
+    .query("SELECT DISTINCT * FROM events ORDER BY eventName")
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return [];
+    });
+};
+
+// Calling the function to fetch all events and log the results
+getAllEvents()
+  .then((events) => {
+    console.log(events);
+  })
+  .catch((err) => {
+    console.log("Error fetching events:", err.message);
+  });
+
+
+  const updateEvent = function (event) {
+    const { eventId, eventName, eventDescription, eventLocation, eventDate } = event;
+    return pool
+      .query(
+        "UPDATE events SET eventName = $2, eventDescription = $3, eventLocation = $4, eventDate = $5 WHERE eventId = $1 RETURNING *",
+        [eventId, eventName, eventDescription, eventLocation, eventDate]
+      )
+      .then((res) => {
+        console.log(res.rows);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+  
+  // Testing updateEvent added
+  const newEvent = {
+    eventId: 6, 
+    eventName: 'Live Music Night',
+    eventDescription: 'An evening of live music and performances.',
+    eventLocation: 'Chicago',
+    eventDate: '2023-07-25',
+  };
+  
+  updateEvent(newEvent);
+
+
+//Delete an Event:
+const removeEvent = function (eventId) {
+  pool
+    .query(
+      "DELETE FROM events WHERE eventId = $1 RETURNING *",
+      [eventId])
+    .then((res) => {
+      console.log(res.rows);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+const eventId = 55
+removeEvent(eventId);
+
+   
+
+module.exports = { addEvent, getAllEvents, updateEvent, removeEvent };
+
+
+
