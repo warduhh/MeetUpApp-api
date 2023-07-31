@@ -45,7 +45,7 @@ const addUser = function(userInfo) {
     });
 };
 
-// Testing newUser added
+/* Testing newUser added
 const newUser = {
   firstName: 'Warda',
   lastName: 'Nur',
@@ -54,6 +54,7 @@ const newUser = {
 };
 
 addUser(newUser);
+*/
 
 
 
