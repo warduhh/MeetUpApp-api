@@ -17,6 +17,7 @@ const getGroupMembers = function (groupId) {
 };
 
 // Testing
+/*
 (async () => {
   try {
     const groupId = '2';
@@ -26,6 +27,7 @@ const getGroupMembers = function (groupId) {
     console.error('Error:', err);
   }
 })();
+*/
 
 
 

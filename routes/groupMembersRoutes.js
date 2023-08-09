@@ -4,12 +4,13 @@ const router = express.Router();
 
 
 // Retrieve members of a specific group
-router.get('/groups/:groupId/groups', (req, res) => {
+router.get('/groups/:groupId/members', (req, res) => {
+  console.log("Inside /groups/:groupID/members route");
   const groupId = req.params.groupId;
 
   getGroupMembers(groupId)
-    .then(groups => {
-      res.json(groups);
+    .then(members => {
+      res.json(members);
     })
     .catch(err => {
       res.status(500).json({ error: 'Failed to fetch group members' });
