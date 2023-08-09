@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserByEmail, addUser, getUserById, updateUser } = require('../db/queries/user');
+const { getUserByEmail, addUser, getUserById, updateUser, getAllNames } = require('../db/queries/user');
 const router = express.Router();
 //ROUTES ARE localhost:3000/user/users/
 
@@ -36,7 +36,7 @@ router.get('/users/:email', (req, res) => {
     });
 });
 
-
+//Route to retrieve user information by userId
 router.get('/users/:userId', (req, res) => {
   const userId = req.params.userId; 
   getUserById(userId) 
@@ -54,25 +54,6 @@ router.get('/users/:userId', (req, res) => {
 });
 
 
-
-
-//Route to retrieve user information by userId
-router.get('/users/:userId', (req, res) => {
-  const userId = req.params.userId;
-
-  getUserById(userId)
-    .then(user => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'Something went wrong' });
-      console.error('Error fetching user:', err);
-    });
-});
 
 // Route for updating details of a user
 router.put('/users/:userId', (req, res) => {
@@ -95,6 +76,19 @@ router.put('/users/:userId', (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
+
+router.get('/names', (req, res) => {
+  getAllNames()
+    .then(fullnames => {
+      console.log("TESTING NAME LIST", fullnames)
+      res.json(fullnames);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Something went wrong' });
+      console.log('error: ', err);
+    });
+});
+
 
 module.exports = router;
 

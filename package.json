@@ -2,11 +2,12 @@
   "name": "finalprojectmeetupapp-api",
   "version": "1.0.0",
   "description": "",
+  "proxy": "http://localhost:8080",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon ./server.js",
     "error": "TEST_ERROR=true node ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node ./server.js"
   },
   "repository": {
     "type": "git",

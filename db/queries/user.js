@@ -81,6 +81,18 @@ const updateUser = function (userId, updatedUserInfo) {
     });
 };
 
+const getAllNames = function () {
+  return pool
+  .query('SELECT CONCAT(firstName, \' \', lastName) AS fullName FROM users;')
+  .then((res) => {
+    return res.rows;
+  })
+    .catch((err) => {
+      console.log(err.message);
+      return [];
+    });
+};
+
 /*
 const updatedUser = {
   userId: 8,
@@ -105,4 +117,5 @@ module.exports = {
   getUserById,
   addUser,
   updateUser,
+  getAllNames
 }; 
