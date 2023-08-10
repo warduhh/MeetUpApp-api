@@ -1,5 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,30 +8,34 @@ const port = process.env.PORT || 3000;
 
 
 
-
 const userRoutes = require('./routes/userRoutes');
-//const eventsRoutes = require('./routes/eventRoutes');
-//const groupRoutes = require('./routes/groupRoutes')
+const groupRoutes = require('./routes/groupRoutes');
+const groupMembersRoutes = require ('./routes/groupMembersRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+const eventAttendeeRoutes = require ('./routes/eventAttendeeRoutes');
 
 
 
 
 
-
-// /api/endpoints
-//app.use("/api", apiRoutes);
 
 // /user/endpoints
-app.use("/users", userRoutes);
+app.use('/user', userRoutes);
+app.use('/group', groupRoutes);
+app.use ('groupMembers', groupMembersRoutes);
+app.use('/event', eventRoutes);
+app.use('/eventAttendee', eventAttendeeRoutes);
 
-//app.use('/api/events', eventRoutes);
-//app.use('/api/groups', groupRoutes);
-//app.use('/api/interests', interestRoutes);
 
-app.get("/test", (req, res) => {
-  res.send("🤗");
-});
+
+
 
 app.listen(port, (err) => {
-  console.log(err || `listening on port ${port} 😎`);
+  console.log(err || `listening on port ${port} 😎 test123`);
+ 
 });
+
+
+
+
+

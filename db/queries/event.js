@@ -53,6 +53,23 @@ getAllEvents()
   });
 
 
+//Get Event by Id
+  const getEventById = function (eventId) {
+    return pool
+      .query("SELECT * FROM events WHERE eventId = $1", [eventId])
+      .then((res) => {
+        return res.rows[0]; // Return the first (and only) row as the event
+      })
+      .catch((err) => {
+        console.error(err);
+        return null;
+      });
+  };
+  
+  module.exports = { getEventById };
+  
+
+//Update Event
   const updateEvent = function (event) {
     const { eventId, eventName, eventDescription, eventLocation, eventDate } = event;
     return pool
@@ -98,7 +115,7 @@ removeEvent(eventId);
 
    
 
-module.exports = { addEvent, getAllEvents, updateEvent, removeEvent };
+module.exports = { addEvent, getAllEvents, updateEvent, removeEvent, getEventById };
 
 
 
