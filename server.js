@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
 
 
 
@@ -20,6 +21,7 @@ const eventAttendeeRoutes = require ('./routes/eventAttendeeRoutes');
 
 
 // /user/endpoints
+
 app.use('/user', userRoutes);
 app.use('/group', groupRoutes);
 app.use ('groupMembers', groupMembersRoutes);
