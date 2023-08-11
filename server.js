@@ -4,8 +4,10 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const { getAllEvents } = require('./db/queries/events');
-const { getAllGroups } = require('./db/queries/groups');
+const { getAllEvents } = require('./db/queries/event');
+const { getAllGroups } = require('./db/queries/group');
+const events = require('./db/queries/event');
+
 
 
 app.use((req, res, next) => {
@@ -48,13 +50,14 @@ app.get("/events", (req, res) => {
   })
 })
 
-app._router.get("/groups", (req, res) => {
+app.get("/groups", (req, res) => {
   getAllGroups()
-  .then((groups) => {
-    console.log (groups)
-    res.send (groups)
-  })
-})
+    .then((groups) => {
+      console.log(groups);
+      res.send(groups);
+    });
+});
+
 
 app.listen(port, (err) => {
   console.log(err || `listening on port ${port} 😎 test123`);
