@@ -17,7 +17,7 @@ const dbParams = {
 const db = new Pool(dbParams);
 
 console.log (Pool)
-console.log("test")
+
 async function listTables() {
   try {
     const client = await db.connect();

@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/events');
+const { getAllGroups } = require('./db/queries/groups');
 
 
 app.use((req, res, next) => {
@@ -44,6 +45,14 @@ app.get("/events", (req, res) => {
   .then((events) => {
     console.log(events)
     res.send(events)
+  })
+})
+
+app._router.get("/groups", (req, res) => {
+  getAllGroups()
+  .then((groups) => {
+    console.log (groups)
+    res.send (groups)
   })
 })
 
