@@ -43,6 +43,7 @@ const getAllEvents = function () {
     });
 };
 
+/*
 // Calling the function to fetch all events and log the results
 getAllEvents()
   .then((events) => {
@@ -51,7 +52,7 @@ getAllEvents()
   .catch((err) => {
     console.log("Error fetching events:", err.message);
   });
-
+*/
 
 //Get Event by Id
   const getEventById = function (eventId) {
@@ -85,6 +86,7 @@ getAllEvents()
       });
   };
   
+  /*
   // Testing updateEvent added
   const newEvent = {
     eventId: 6, 
@@ -95,24 +97,27 @@ getAllEvents()
   };
   
   updateEvent(newEvent);
+*/
 
 
 //Delete an Event:
 const removeEvent = function (eventId) {
-  pool
+  return pool
     .query(
       "DELETE FROM events WHERE eventId = $1 RETURNING *",
       [eventId])
-    .then((res) => {
+    /*.then((res) => {
       console.log(res.rows);
     })
     .catch((err) => {
       console.log(err.message);
     });
+    */
 };
+/*
 const eventId = 55
 removeEvent(eventId);
-
+*/
    
 
 module.exports = { addEvent, getAllEvents, updateEvent, removeEvent, getEventById };

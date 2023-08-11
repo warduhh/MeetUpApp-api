@@ -21,7 +21,7 @@ router.get('/groups/:groupId/members', (req, res) => {
 // Join a group (add member to group)
 router.post('/groups/:groupId/members', (req, res) => {
   const groupId = req.params.groupId;
-  const userId = req.body.userId; // Assuming you provide userId in the request body
+  const userId = req.body.userId; 
 
   addMemberToGroup(groupId, userId)
     .then(addedMember => {
