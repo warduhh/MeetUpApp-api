@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserByEmail, addUser, getUserById, updateUser } = require ('../db/queries/user');
+const { getUserByEmail, addUser, getUserById, updateUser } = require('../db/queries/user');
 const router = express.Router();
 //ROUTES ARE localhost:3000/user/users/
 
@@ -11,7 +11,7 @@ router.post('/users', (req, res) => {
       res.json(data);
     })
     .catch(err => {
-      res.status(500).json({ error: 'Something went wrong' }); 
+      res.status(500).json({ error: 'Something went wrong' });
       console.log('error: ', err);
     });
 });
@@ -23,10 +23,15 @@ router.get('/users/:email', (req, res) => {
   const email = req.params.email;
   getUserByEmail(email)
     .then(data => {
-      res.json(data.rows); 
+      if (data) {
+        res.json(data);
+      } else {
+
+        res.status(500).json({ error: 'Something went wrong' }); // Sending JSON error response
+      }
     })
     .catch(err => {
-      res.status(500).json({ error: 'Something went wrong' }); // Sending JSON error response
+      res.status(500).json({ error: 'Something went wrong' });
       console.log('error: ', err);
     });
 });
@@ -37,13 +42,13 @@ router.get('/users/:userId', (req, res) => {
   getUserById(userId)
     .then(data => {
       if (data) {
-        res.json(data); 
+        res.json(data);
       } else {
         res.status(404).json({ error: 'User not found' });
       }
     })
     .catch(err => {
-      res.status(500).json({ error: 'Something went wrong' }); // Sending JSON error response
+      res.status(500).json({ error: 'Something went wrong' });
       console.log('error: ', err);
     });
 });
