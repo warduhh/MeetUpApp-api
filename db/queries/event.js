@@ -43,6 +43,7 @@ const getAllEvents = function () {
     });
 };
 
+/*
 // Calling the function to fetch all events and log the results
 getAllEvents()
   .then((events) => {
@@ -51,8 +52,25 @@ getAllEvents()
   .catch((err) => {
     console.log("Error fetching events:", err.message);
   });
+*/
 
+//Get Event by Id
+  const getEventById = function (eventId) {
+    return pool
+      .query("SELECT * FROM events WHERE eventId = $1", [eventId])
+      .then((res) => {
+        return res.rows[0]; // Return the first (and only) row as the event
+      })
+      .catch((err) => {
+        console.error(err);
+        return null;
+      });
+  };
+  
+  module.exports = { getEventById };
+  
 
+//Update Event
   const updateEvent = function (event) {
     const { eventId, eventName, eventDescription, eventLocation, eventDate } = event;
     return pool
@@ -68,6 +86,7 @@ getAllEvents()
       });
   };
   
+  /*
   // Testing updateEvent added
   const newEvent = {
     eventId: 6, 
@@ -78,27 +97,30 @@ getAllEvents()
   };
   
   updateEvent(newEvent);
+*/
 
 
 //Delete an Event:
 const removeEvent = function (eventId) {
-  pool
+  return pool
     .query(
       "DELETE FROM events WHERE eventId = $1 RETURNING *",
       [eventId])
-    .then((res) => {
+    /*.then((res) => {
       console.log(res.rows);
     })
     .catch((err) => {
       console.log(err.message);
     });
+    */
 };
+/*
 const eventId = 55
 removeEvent(eventId);
-
+*/
    
 
-module.exports = { addEvent, getAllEvents, updateEvent, removeEvent };
+module.exports = { addEvent, getAllEvents, updateEvent, removeEvent, getEventById };
 
 
 

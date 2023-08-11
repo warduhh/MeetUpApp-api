@@ -17,4 +17,3 @@ const db = new Pool(dbParams);
 
 
 module.exports = db;
-

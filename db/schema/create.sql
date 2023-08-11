@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Events CASCADE;
 DROP TABLE IF EXISTS EventAttendee CASCADE;
+
+                            
 DROP TABLE IF EXISTS Groups CASCADE;
 DROP TABLE IF EXISTS GroupMembers CASCADE;
 DROP TABLE IF EXISTS UserInterests CASCADE;
@@ -29,7 +31,7 @@ CREATE TABLE Events (
 
 CREATE TABLE EventAttendee (
     eventAttendeeId SERIAL PRIMARY KEY,
-    eventId INT REFERENCES Events(eventId),
+    eventId INT REFERENCES Events(eventId) ON DELETE CASCADE,
     userId INT REFERENCES Users(userId)
 );
 

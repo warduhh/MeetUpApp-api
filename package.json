@@ -5,7 +5,11 @@
   "proxy": "http://localhost:8080",
   "main": "src/index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "node ./src/index.js",
+=======
+    "start": "nodemon ./server.js",
+>>>>>>> 5284ad091b0eedbba7e72fb1fb2793c208dd15b0
     "error": "TEST_ERROR=true node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node ./server.js"
