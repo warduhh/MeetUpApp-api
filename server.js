@@ -17,6 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
 
 
 
@@ -32,6 +33,7 @@ const eventAttendeeRoutes = require ('./routes/eventAttendeeRoutes');
 
 
 // /user/endpoints
+
 app.use('/user', userRoutes);
 app.use('/group', groupRoutes);
 app.use ('groupMembers', groupMembersRoutes);

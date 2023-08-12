@@ -15,7 +15,6 @@ const getUserByEmail = function (email) {
 //testing by using an email in the database 
 //getUserByEmail('john.doe@example.com')
 
-
 const getUserById = function (userid) {
   return pool
     .query('SELECT * FROM users WHERE userId = $1;', [userid])
@@ -31,8 +30,9 @@ const getUserById = function (userid) {
       return null;
     });
 };
+
 //testing userId 3
-// getUserById('3')
+getUserById('3')
 
 
 const addUser = function (userInfo) {
@@ -105,4 +105,4 @@ module.exports = {
   getUserById,
   addUser,
   updateUser,
-};
+}; 

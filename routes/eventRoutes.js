@@ -38,9 +38,9 @@ router.get('/events/:eventId', (req, res) => {
 
 // Route for creating a new event
 router.post('/events', (req, res) => {
-  const { eventName, eventDescription, eventLocation, eventDate } = req.body;
+  const { eventName, eventDescription, eventLocation, eventDate, organizerId } = req.body;
 
-  if (!eventName || !eventDescription || !eventLocation || !eventDate) {
+  if (!eventName || !eventDescription || !eventLocation || !eventDate || !organizerId) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -49,6 +49,7 @@ router.post('/events', (req, res) => {
     eventDescription,
     eventLocation,
     eventDate,
+    organizerId,
   };
 
   addEvent(newEvent)
