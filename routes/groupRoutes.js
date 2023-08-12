@@ -17,7 +17,6 @@ router.get('/groups', (req, res) => {
 
 
 // Route for getting all groups a user is a member of
-//notworking
 router.get('/users/:userId/groups', (req, res) => {
   const userId = req.params.userId;
 

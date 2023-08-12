@@ -1,16 +1,15 @@
 const express = require('express');
 const { getGroupMembers, addMemberToGroup, removeMemberFromGroup } = require ('../db/queries/groupMembers')
-
 const router = express.Router();
 
 
 // Retrieve members of a specific group
-router.get('/groups/:groupId/members', (req, res) => {
+router.get('/groups/:groupId/groups', (req, res) => {
   const groupId = req.params.groupId;
 
   getGroupMembers(groupId)
-    .then(members => {
-      res.json(members);
+    .then(groups => {
+      res.json(groups);
     })
     .catch(err => {
       res.status(500).json({ error: 'Failed to fetch group members' });

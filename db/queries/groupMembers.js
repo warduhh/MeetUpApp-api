@@ -16,6 +16,20 @@ const getGroupMembers = function (groupId) {
     });
 };
 
+// Testing
+(async () => {
+  try {
+    const groupId = '2';
+    const members = await getGroupMembers(groupId);
+    console.log('Group Members:', members);
+  } catch (err) {
+    console.error('Error:', err);
+  }
+})();
+
+
+
+
 //Add a user as a member to a group
 const addMemberToGroup = function (groupId, userId) {
   return pool

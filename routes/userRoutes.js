@@ -27,7 +27,7 @@ router.get('/users/:email', (req, res) => {
         res.json(data);
       } else {
 
-        res.status(500).json({ error: 'Something went wrong' }); // Sending JSON error response
+        res.status(500).json({ error: 'Something went wrong' }); 
       }
     })
     .catch(err => {
@@ -38,8 +38,8 @@ router.get('/users/:email', (req, res) => {
 
 
 router.get('/users/:userId', (req, res) => {
-  const userId = req.params.userId; // Capture the userId from the URL
-  getUserById(userId) // Call the function with the correct parameter
+  const userId = req.params.userId; 
+  getUserById(userId) 
     .then(data => {
       if (data) {
         res.json(data);

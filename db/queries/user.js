@@ -32,7 +32,7 @@ const getUserById = function (userid) {
 };
 
 //testing userId 3
-getUserById('3')
+//getUserById('3')
 
 
 const addUser = function (userInfo) {

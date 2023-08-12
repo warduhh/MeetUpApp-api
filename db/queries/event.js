@@ -23,6 +23,7 @@ const addEvent = function (newEvent) {
 
 
 // Testing newEvent added
+/*
 const newEvent = {
   eventName: 'Coffee Chat',
   eventDescription: 'Networking event to meet people in the Tech industry',
@@ -32,6 +33,7 @@ const newEvent = {
 };
 
 addEvent(newEvent);
+*/
 
 
 
