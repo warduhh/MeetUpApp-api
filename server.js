@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/event');
 const { getAllGroups } = require('./db/queries/group');
 const events = require('./db/queries/event');
+const { getAllNames } = require ('./db/queries/user')
 
 
 
@@ -39,8 +40,6 @@ app.use('/group', groupRoutes);
 app.use ('groupMembers', groupMembersRoutes);
 app.use('/event', eventRoutes);
 app.use('/eventAttendee', eventAttendeeRoutes);
-
-
 
 
 
