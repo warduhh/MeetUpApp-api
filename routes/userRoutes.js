@@ -98,9 +98,9 @@ router.put('/users/:userId', (req, res) => {
 
 router.get('/names', (req, res) => {
   getAllNames()
-    .then(names => {
-      console.log("TESTING NAME LIST", names)
-      res.json(names);
+    .then(fullnames => {
+      console.log("TESTING NAME LIST", fullnames)
+      res.json(fullnames);
     })
     .catch(err => {
       res.status(500).json({ error: 'Something went wrong' });
