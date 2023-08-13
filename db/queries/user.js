@@ -83,7 +83,7 @@ const updateUser = function (userId, updatedUserInfo) {
 
 const getAllNames = function () {
   return pool
-  .query('SELECT CONCAT(firstName, \' \', lastName) AS name FROM users;')
+  .query('SELECT CONCAT(firstName, \' \', lastName) AS fullName FROM users;')
   .then((res) => {
     return res.rows;
   })
