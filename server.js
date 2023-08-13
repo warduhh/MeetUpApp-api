@@ -8,6 +8,7 @@ const { getAllEvents } = require('./db/queries/event');
 const { getAllGroups } = require('./db/queries/group');
 const events = require('./db/queries/event');
 const { getAllNames } = require ('./db/queries/user')
+const cors = require('cors')
 
 
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(cors())
 
 
 
