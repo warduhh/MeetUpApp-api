@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/event');
 const { getAllGroups } = require('./db/queries/group');
 const events = require('./db/queries/event');
-const { getAllNames } = require ('./db/queries/user')
+const { getAllNames, updateProfile } = require ('./db/queries/user')
 const cors = require('cors')
 
 
@@ -48,6 +48,7 @@ app.get("/events", (req, res) => {
   })
 })
 
+
 app.get("/groups", (req, res) => {
   getAllGroups()
     .then((groups) => {
@@ -55,6 +56,23 @@ app.get("/groups", (req, res) => {
       res.send(groups);
     });
 });
+
+app.post("/update-profile", (req, res) => {
+  const { fullName, email, phoneNumber } = req.body;
+
+  updateProfile(fullName, { email, phoneNumber })
+    .then(updatedUser => {
+      if (updatedUser) {
+        res.json({ message: "Profile updated successfully" });
+      } else {
+        res.status(500).json({ error: "Error updating profile" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Error updating profile" });
+    });
+});
+
 
 
 app.listen(port, (err) => {

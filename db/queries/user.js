@@ -81,6 +81,29 @@ const updateUser = function (userId, updatedUserInfo) {
     });
 };
 
+const updateProfile = function (fullName, updatedProfileInfo) {
+  const { email, phoneNumber } = updatedProfileInfo;
+  const [firstName, lastName] = fullName.split(' ');
+
+  return pool
+    .query(
+      "UPDATE users SET email = $3, phoneNumber = $4 WHERE firstName = $1 AND lastName = $2 RETURNING *",
+      [firstName, lastName, email, phoneNumber]
+    )
+    .then((res) => {
+      console.log(res.rows);
+      return res.rows[0];
+    })
+    .catch((err) => {
+      console.log("testing if broken here")
+      console.error(err);
+      return null;
+    });
+};
+
+
+
+
 const getAllNames = function () {
   return pool
   .query('SELECT CONCAT(firstName, \' \', lastName) AS fullName FROM users;')
@@ -117,5 +140,6 @@ module.exports = {
   getUserById,
   addUser,
   updateUser,
-  getAllNames
+  getAllNames,
+  updateProfile
 }; 
