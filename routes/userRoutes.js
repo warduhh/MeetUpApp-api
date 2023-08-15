@@ -80,7 +80,7 @@ router.put('/users/:userId', (req, res) => {
 router.get('/names', (req, res) => {
   getAllNames()
     .then(fullnames => {
-      console.log("TESTING NAME LIST", fullnames)
+      // console.log("TESTING NAME LIST", fullnames)
       res.json(fullnames);
     })
     .catch(err => {

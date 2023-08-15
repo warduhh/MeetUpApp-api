@@ -37,7 +37,7 @@ router.get('/events/:eventId', (req, res) => {
 
 
 // Route for creating a new event
-router.post('/events', (req, res) => {
+router.post('/createEvents', (req, res) => {
   const { eventName, eventDescription, eventLocation, eventDate, organizerId } = req.body;
 
   if (!eventName || !eventDescription || !eventLocation || !eventDate || !organizerId) {

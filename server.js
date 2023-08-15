@@ -22,8 +22,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cors())
 
-
-
 const userRoutes = require('./routes/userRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const groupMembersRoutes = require ('./routes/groupMembersRoutes');
@@ -54,6 +52,31 @@ app.get("/groups", (req, res) => {
     .then((groups) => {
       console.log(groups);
       res.send(groups);
+    });
+});
+
+
+app.post("/createEvents", (req, res) => {
+  const { eventName, eventDescription, eventLocation, eventDate, organizerId } = req.body;
+
+  if (!eventName || !eventDescription || !eventLocation || !eventDate || !organizerId) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const newEvent = { // Define the newEvent variable
+    eventName,
+    eventDescription,
+    eventLocation,
+    eventDate,
+    organizerId,
+  };
+  events.addEvent(newEvent)
+    .then(createdEvent => {
+      res.status(201).json(createdEvent);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to create event' });
+      console.error('Error creating event:', err);
     });
 });
 
