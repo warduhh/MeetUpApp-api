@@ -12,7 +12,7 @@ router.post('/users', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: 'Something went wrong' });
-      console.log('error: ', err);
+      // console.log('error: ', err);
     });
 });
 

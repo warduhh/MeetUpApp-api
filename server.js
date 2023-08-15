@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/event');
 const { getAllGroups } = require('./db/queries/group');
 const events = require('./db/queries/event');
+const groups = require('./db/queries/group')
 const { getAllNames, updateProfile } = require ('./db/queries/user')
 const cors = require('cors')
 
@@ -57,9 +58,9 @@ app.get("/groups", (req, res) => {
 
 
 app.post("/createEvents", (req, res) => {
-  const { eventName, eventDescription, eventLocation, eventDate, organizerId } = req.body;
+  const { eventName, eventDescription, eventLocation, eventDate} = req.body;
 
-  if (!eventName || !eventDescription || !eventLocation || !eventDate || !organizerId) {
+  if (!eventName || !eventDescription || !eventLocation || !eventDate) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -68,7 +69,7 @@ app.post("/createEvents", (req, res) => {
     eventDescription,
     eventLocation,
     eventDate,
-    organizerId,
+    // organizerId,
   };
   events.addEvent(newEvent)
     .then(createdEvent => {
@@ -79,6 +80,31 @@ app.post("/createEvents", (req, res) => {
       console.error('Error creating event:', err);
     });
 });
+
+
+
+
+app.post("/createGroups", (req, res) => {
+  const { groupName, groupDescription } = req.body;
+
+  if (!groupName || !groupDescription) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const newGroup = {
+    groupName,
+    groupDescription,
+  };
+  groups.createGroup(newGroup) // This line should not be interrupted by console.log
+    .then(createdGroup => {
+      res.status(201).json(createdGroup);
+      console.log(createdGroup)
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to create group' });
+      console.error('Error creating group:', err);
+    });
+  });
 
 app.post("/update-profile", (req, res) => {
   const { fullName, email, phoneNumber } = req.body;
