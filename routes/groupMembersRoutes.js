@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 // Retrieve members of a specific group
-router.get('/groups/:groupId/members', (req, res) => {
+router.get('/:groupId/members', (req, res) => {
   console.log("Inside /groups/:groupID/members route");
   const groupId = req.params.groupId;
 

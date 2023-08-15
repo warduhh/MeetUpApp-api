@@ -15,6 +15,7 @@ DB_PASSWORD=labber
 DB_DATABASE=meetupapp
 DB_PORT=5432 
 )
+
 Go into psql
 Create a db  `CREATE DATABASE meetupapp;`
 Creat user  `CREATE USER labber WITH ENCRYPTED PASSWORD ‘labber’;` 

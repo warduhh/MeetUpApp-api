@@ -3,12 +3,15 @@ const { getAllEvents, getEventById, addEvent, updateEvent, removeEvent } = requi
 const router = express.Router();
 
 // Route for getting all events
-router.get('/events', (req, res) => {
+router.get('/', (req, res) => {
+  console.log('Hey we got here')
   getAllEvents()
     .then(events => {
+      console.log('Is this working?', events)
       res.json(events);
     })
     .catch(err => {
+      console.log(err)
       res.status(500).json({ error: 'Something went wrong' });
       console.error('Error fetching events:', err);
     });

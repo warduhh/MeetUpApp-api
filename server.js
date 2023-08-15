@@ -33,19 +33,20 @@ const eventAttendeeRoutes = require ('./routes/eventAttendeeRoutes');
 // /user/endpoints
 
 app.use('/user', userRoutes);
-app.use('/group', groupRoutes);
+app.use('/groups', groupRoutes);
 app.use ('/groupMembers', groupMembersRoutes);
-app.use('/event', eventRoutes);
+app.use('/events', eventRoutes);
 app.use('/eventAttendee', eventAttendeeRoutes);
 
-
+/*
 
 app.get("/events", (req, res) => {
+  console.log('hello we are in server.js')
   getAllEvents()
   .then((events) => {
     console.log(events)
     res.send(events)
-  })
+  }).catch((error) => console.log(error))
 })
 
 app.get("/groups", (req, res) => {
@@ -56,6 +57,7 @@ app.get("/groups", (req, res) => {
     });
 });
 
+*/
 
 app.listen(port, (err) => {
   console.log(err || `listening on port ${port} 😎 `);
