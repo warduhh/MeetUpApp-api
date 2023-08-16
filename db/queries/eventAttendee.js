@@ -18,6 +18,22 @@ const getAttendeesForEvent = function (eventId) {
     });
 };
 
+const getAttendeesCountForEvent = function (eventId) {
+  return pool
+    .query(
+      "SELECT COUNT(*) FROM eventAttendee WHERE eventId = $1",
+      [eventId]
+    )
+    .then((res) => {
+      return res.rows[0].count; // Get the count value from the first row
+    })
+    .catch((err) => {
+      console.log(err.message);
+      return 0; // Return 0 if there's an error
+    });
+};
+
+
 
 // Get Events Attended by a Specific User
 
@@ -40,18 +56,23 @@ const getEventsAttendedByUser = function (userId) {
 
 // Add an Attendee to an Event:
 const addAttendeeToEvent = function (eventId, userId) {
-  pool
-    .query(
-      "INSERT INTO eventAttendee (eventId, userId) VALUES ($1, $2)",
-      [eventId, userId]
-    )
-    .then((res) => {
-      console.log(res.rows);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  return new Promise((resolve, reject) => {
+    pool
+      .query(
+        "INSERT INTO eventAttendee (eventId, userId) VALUES ($1, $2)",
+        [eventId, userId]
+      )
+      .then((res) => {
+        console.log(res.rows);
+        resolve(); // Resolve the promise to indicate success
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err); // Reject the promise to indicate failure
+      });
+  });
 };
+
 
 /*
 const newAttendee = {
@@ -82,4 +103,4 @@ const eventId = 1;
 const userId = 7;
 removeAttendeeFromEvent(eventId, userId);
 */
-module.exports = { getAttendeesForEvent, getEventsAttendedByUser, addAttendeeToEvent, removeAttendeeFromEvent };
+module.exports = { getAttendeesForEvent, getEventsAttendedByUser, addAttendeeToEvent, removeAttendeeFromEvent, getAttendeesCountForEvent };

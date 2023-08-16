@@ -116,6 +116,26 @@ const getAllNames = function () {
     });
 };
 
+function getUserIdByFullName(fullName) {
+  const query = `
+    SELECT userId
+    FROM Users
+    WHERE CONCAT(firstName, ' ', lastName) = $1
+  `;
+  
+  return db.query(query, [fullName])
+    .then(result => {
+      if (result.rows.length > 0) {
+        return result.rows[0].userId;
+      } else {
+        return null;
+      }
+    })
+    .catch(error => {
+      throw error;
+    });
+}
+
 /*
 const updatedUser = {
   userId: 8,
@@ -141,5 +161,6 @@ module.exports = {
   addUser,
   updateUser,
   getAllNames,
-  updateProfile
+  updateProfile,
+  getUserIdByFullName
 }; 

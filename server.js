@@ -10,6 +10,7 @@ const events = require('./db/queries/event');
 const groups = require('./db/queries/group')
 const { getAllNames, updateProfile } = require ('./db/queries/user')
 const cors = require('cors')
+const {addAttendeeToEvent, getAttendeesCountForEvent} = require ('./db/queries/eventAttendee')
 
 
 
@@ -82,8 +83,6 @@ app.post("/createEvents", (req, res) => {
 });
 
 
-
-
 app.post("/createGroups", (req, res) => {
   const { groupName, groupDescription } = req.body;
 
@@ -95,16 +94,21 @@ app.post("/createGroups", (req, res) => {
     groupName,
     groupDescription,
   };
-  groups.createGroup(newGroup) // This line should not be interrupted by console.log
+
+  groups.createGroup(newGroup)
     .then(createdGroup => {
-      res.status(201).json(createdGroup);
-      console.log(createdGroup)
+      res.status(201).json(createdGroup); // Send the createdGroup object directly
     })
     .catch(err => {
       res.status(500).json({ error: 'Failed to create group' });
       console.error('Error creating group:', err);
     });
-  });
+});
+
+
+
+
+
 
 app.post("/update-profile", (req, res) => {
   const { fullName, email, phoneNumber } = req.body;
@@ -121,6 +125,40 @@ app.post("/update-profile", (req, res) => {
       res.status(500).json({ error: "Error updating profile" });
     });
 });
+
+
+app.post('/events/:eventId/attendees', async (req, res) => {
+  const eventId = req.params.eventId;
+  const userId = req.body.userId; 
+  console.log ("TESTING")
+  console.log (eventId, userId);
+
+  try {
+    await addAttendeeToEvent(eventId, userId);
+    res.status(201).json({ message: 'Attendee added successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add attendee to event' });
+    console.error('Error adding attendee to event:', err);
+  }
+});
+
+app.get("/events/:eventId/attendees/count", (req, res) => {
+  const eventId = req.params.eventId;
+  console.log("TESTING")
+
+  getAttendeesCountForEvent(eventId)
+    .then((attendeesCount) => {
+      res.json({ count: attendeesCount });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Failed to fetch attendees count" });
+    });
+});
+
+
+
+
+
 
 
 

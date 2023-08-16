@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserByEmail, addUser, getUserById, updateUser, getAllNames } = require('../db/queries/user');
+const { getUserByEmail, addUser, getUserById, updateUser, getAllNames, getUserIdByFullName } = require('../db/queries/user');
 const router = express.Router();
 //ROUTES ARE localhost:3000/user/users/
 
@@ -82,6 +82,24 @@ router.get('/names', (req, res) => {
     .then(fullnames => {
       // console.log("TESTING NAME LIST", fullnames)
       res.json(fullnames);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Something went wrong' });
+      console.log('error: ', err);
+    });
+});
+
+
+router.get('/users/id-by-fullname/:fullName', (req, res) => {
+  const fullName = req.params.fullName;
+
+  getUserIdByFullName(fullName) 
+    .then(userId => {
+      if (userId) {
+        res.json({ userId });
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
     })
     .catch(err => {
       res.status(500).json({ error: 'Something went wrong' });
