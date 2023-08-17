@@ -33,6 +33,26 @@ const getOrganizerIdByEventId = function (eventId) {
     });
 };
 
+const getGroupNameAndDescriptionByOrganizerId = function (organizerId) {
+  return pool
+    .query(
+      'SELECT groupName, groupDescription FROM Groups WHERE organizerId = $1',
+      [organizerId]
+    )
+    .then((res) => {
+      if (res.rows.length > 0) {
+        const group = res.rows[0];
+        console.log("group", group)
+        return group;
+      } else {
+        return null; // Organizer not found or no group associated
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
+};
 
 
 
@@ -110,4 +130,4 @@ const getAllGroups = function () {
     });
 };
 
-module.exports = { createGroup, getAllGroups, getUserGroups, getGroupById, updateGroupById, deleteGroupById, getOrganizerIdByEventId };
+module.exports = { createGroup, getAllGroups, getUserGroups, getGroupById, updateGroupById, deleteGroupById, getOrganizerIdByEventId, getGroupNameAndDescriptionByOrganizerId  };

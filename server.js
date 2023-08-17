@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/event');
-const { getAllGroups, getOrganizerIdByEventId} = require('./db/queries/group');
+const { getAllGroups, getOrganizerIdByEventId,getGroupNameAndDescriptionByOrganizerId} = require('./db/queries/group');
 const events = require('./db/queries/event');
 const groups = require('./db/queries/group')
 const { getAllNames, updateProfile } = require ('./db/queries/user')
@@ -174,6 +174,25 @@ app.get('/events/:eventId/organizer', (req, res) => {
       console.error('Error fetching organizerId by eventId:', err);
     });
 });
+
+
+app.get('/groups/:organizerId/details', (req, res) => {
+  const organizerId = req.params.organizerId;
+
+  getGroupNameAndDescriptionByOrganizerId(organizerId)
+    .then(groupDetails => {
+      if (groupDetails) {
+        res.json(groupDetails); // Sending group details as JSON response
+      } else {
+        res.status(404).json({ error: 'Group details not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to fetch group details' });
+      console.error('Error fetching group details:', err);
+    });
+});
+
 
 
 app.listen(port, (err) => {

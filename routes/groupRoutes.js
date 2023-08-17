@@ -111,21 +111,44 @@ router.delete('/groups/:groupId', (req, res) => {
     });
 });
 
-router.get('/events/:eventId/group', (req, res) => {
-  const eventId = req.params.eventId;
-  getGroupIdByEventId(eventId)
-    .then(groupId => {
-      if (groupId) {
-        res.json({ groupId });
+const getGroupNameAndDescriptionByOrganizerId = function (organizerId) {
+  return pool
+    .query(
+      'SELECT groupName, groupDescription FROM Groups WHERE organizerId = $1',
+      [organizerId]
+    )
+    .then((res) => {
+      if (res.rows.length > 0) {
+        const group = res.rows[0];
+        return group;
       } else {
-        res.status(404).json({ error: 'Group not found for the event' });
+        return null; // Organizer not found or no group associated
       }
     })
-    .catch(err => {
-      res.status(500).json({ error: 'Failed to fetch groupId for the event' });
-      console.error('Error fetching groupId by eventId:', err);
+    .catch((err) => {
+      console.error(err);
+      return null;
     });
-});
+};
+
+
+
+
+// router.get('/events/:eventId/group', (req, res) => {
+//   const eventId = req.params.eventId;
+//   getGroupIdByEventId(eventId)
+//     .then(groupId => {
+//       if (groupId) {
+//         res.json({ groupId });
+//       } else {
+//         res.status(404).json({ error: 'Group not found for the event' });
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({ error: 'Failed to fetch groupId for the event' });
+//       console.error('Error fetching groupId by eventId:', err);
+//     });
+// });
 
 
 
