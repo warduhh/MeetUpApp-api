@@ -40,7 +40,8 @@ VALUES
     ('Art Community', 'Connecting local artists.', 3),
     ('Coding Enthusiasts', 'A group for coding enthusiasts.', 4),
     ('Nature Lovers', 'For people who appreciate nature.', 5),
-    ('Music Fans', 'Connecting music lovers.', 6);
+    ('Music Fans', 'Connecting music lovers.', 6),
+    ('Foodies', 'Connect with fellow food enthusiasts, swap recipes, dish out dining recommendations and celebrate the joy of indulging in delectable delights.', 7);
 
 -- Group Members
 INSERT INTO GroupMembers (groupId, userId)
