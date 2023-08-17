@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const { getAllEvents } = require('./db/queries/event');
-const { getAllGroups } = require('./db/queries/group');
+const { getAllGroups, getOrganizerIdByEventId} = require('./db/queries/group');
 const events = require('./db/queries/event');
 const groups = require('./db/queries/group')
 const { getAllNames, updateProfile } = require ('./db/queries/user')
@@ -157,9 +157,23 @@ app.get("/events/:eventId/attendees/count", (req, res) => {
 
 
 
-
-
-
+app.get('/events/:eventId/organizer', (req, res) => {
+  const eventId = req.params.eventId;
+  console.log("Received eventId:", eventId);
+  getOrganizerIdByEventId(eventId)
+    .then(organizerId => {
+      console.log("organizerId", organizerId); // Move this inside the .then callback
+      if (organizerId) {
+        res.json({ organizerId });
+      } else {
+        res.status(404).json({ error: 'Organizer not found for the event' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to fetch organizerId for the event' });
+      console.error('Error fetching organizerId by eventId:', err);
+    });
+});
 
 
 app.listen(port, (err) => {

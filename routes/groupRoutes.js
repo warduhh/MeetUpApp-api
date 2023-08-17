@@ -111,6 +111,23 @@ router.delete('/groups/:groupId', (req, res) => {
     });
 });
 
+router.get('/events/:eventId/group', (req, res) => {
+  const eventId = req.params.eventId;
+  getGroupIdByEventId(eventId)
+    .then(groupId => {
+      if (groupId) {
+        res.json({ groupId });
+      } else {
+        res.status(404).json({ error: 'Group not found for the event' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to fetch groupId for the event' });
+      console.error('Error fetching groupId by eventId:', err);
+    });
+});
+
+
 
 
 
