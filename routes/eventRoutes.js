@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/events', (req, res) => {
   getAllEvents()
     .then(events => {
+      console.log(events);
       res.json(events);
     })
     .catch(err => {
