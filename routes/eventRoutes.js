@@ -38,10 +38,10 @@ router.get('/events/:eventId', (req, res) => {
 
 
 // Route for creating a new event
-router.post('/events', (req, res) => {
+router.post('/createEvents', (req, res) => {
   const { eventName, eventDescription, eventLocation, eventDate, organizerId } = req.body;
 
-  if (!eventName || !eventDescription || !eventLocation || !eventDate || !organizerId) {
+  if (!eventName || !eventDescription || !eventLocation || !eventDate) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -50,7 +50,7 @@ router.post('/events', (req, res) => {
     eventDescription,
     eventLocation,
     eventDate,
-    organizerId,
+    // organizerId,
   };
 
   addEvent(newEvent)
@@ -113,6 +113,8 @@ router.delete('/events/:eventId', (req, res) => {
       console.error('Error deleting event:', err);
     });
 });
+
+
 
 
 module.exports = router;
