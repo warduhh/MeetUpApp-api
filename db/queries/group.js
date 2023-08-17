@@ -17,18 +17,46 @@ const createGroup = function (groupName, groupDescription, organizerId) {
 };
 
 
-// Get all groups
-const getAllGroups = function () {
+const getOrganizerIdByEventId = function (eventId) {
   return pool
-    .query("SELECT * FROM groups")
+    .query(
+      "SELECT organizerid FROM Events WHERE eventId = $1",
+      [eventId]
+    )
     .then((res) => {
-      return res.rows;
+      const organizerId = res.rows[0] ? res.rows[0].organizerid : null;
+      return organizerId;
     })
     .catch((err) => {
       console.error(err);
-      return [];
+      return null;
     });
 };
+
+const getGroupNameAndDescriptionByOrganizerId = function (organizerId) {
+  return pool
+    .query(
+      'SELECT groupName, groupDescription FROM Groups WHERE organizerId = $1',
+      [organizerId]
+    )
+    .then((res) => {
+      if (res.rows.length > 0) {
+        const group = res.rows[0];
+        console.log("group", group)
+        return group;
+      } else {
+        return null; // Organizer not found or no group associated
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      return null;
+    });
+};
+
+
+
+
 
 // Get all groups a user is a member of
 const getUserGroups = function (userId) {
@@ -89,6 +117,17 @@ const deleteGroupById = function (groupId) {
     });
 };
 
+// Get all groups
+const getAllGroups = function () {
+  return pool
+    .query("SELECT * FROM groups")
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+      return [];
+    });
+};
 
-
-module.exports = { createGroup, getAllGroups, getUserGroups, getGroupById, updateGroupById, deleteGroupById };
+module.exports = { createGroup, getAllGroups, getUserGroups, getGroupById, updateGroupById, deleteGroupById, getOrganizerIdByEventId, getGroupNameAndDescriptionByOrganizerId  };

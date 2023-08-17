@@ -109,3 +109,19 @@ router.get('/users/id-by-fullname/:fullName', (req, res) => {
 
 
 module.exports = router;
+
+  getUserIdByFullName(fullName) 
+    .then(userId => {
+      if (userId) {
+        res.json({ userId });
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Something went wrong' });
+      console.log('error: ', err);
+    });
+
+
+module.exports = router;
